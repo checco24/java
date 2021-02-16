@@ -29,34 +29,41 @@ public class threadServer extends Thread{
     
     @Override
     public void run(){
-        System.out.println(avvia(2345));
-        timestamp = new Timestamp(System.currentTimeMillis());
-        while(true){
-            try {
-                socket=server.accept();
-                System.out.println("connesso ad un client");
-                String t="ciao";
-                this.socket.setKeepAlive(true);
+        //System.out.println(avvia(2345));
+        
+        if(avvia(2345)){
+            while(true){
+                try {
+                    socket=server.accept();
+                    System.out.println("connesso ad un client");
+                    String t="ciao";
+                    timestamp = new Timestamp(System.currentTimeMillis());
 
-                System.out.println("scrivo al client");
-                scrivi(t+"\nla nuova porta di comunicazione è : "+String.valueOf(cercaPortaLibera()));
-                System.out.println("leggo dal client");
-                leggi(socket);
-            
-                
-            
-            } catch (IOException ex) {        }
-            
+                    this.socket.setKeepAlive(true);
+
+                    System.out.println("scrivo al client");
+                    scrivi(t+"\nla nuova porta di comunicazione è : "+String.valueOf(cercaPortaLibera()));
+                    System.out.println("leggo dal client");
+                    leggi(socket);
+
+
+
+                } catch (IOException ex) {        }
+
+            }
+        
         }
         
         
     }
-        public String avvia(int port){
+        public boolean avvia(int port){
         try {
             server=new ServerSocket(port);
-            return "Server avviato con successo";
+            System.out.println( "Server avviato con successo");
+            return true;
         } catch (IOException ex) {}
-        return "impossibile avviare il server";
+        System.out.println( "impossibile avviare il server");
+        return false;
     }
     
     private int cercaPortaLibera() {

@@ -29,7 +29,7 @@ public class threadClient extends Thread{
     public void run(){
         
         try {
-            socket = new Socket("127.0.0.1",2222);
+            socket = new Socket("127.0.0.1",2345);
             System.out.println("connesso al server");
            
             
@@ -79,14 +79,14 @@ public class threadClient extends Thread{
 //            String[] dati = messaggio.split(":");
 //            String s = dati[1];
 //            
-            try{
-                if(Integer.valueOf(separa(messaggio))>1024){
-                    
-                    avvia(separa(messaggio));
-                } 
-            }catch(NumberFormatException e){ 
-                    //System.out.println(e.toString());
-                }
+//            try{
+//                if(Integer.valueOf(separa(messaggio))>1024){
+//                    
+//                    avvia(separa(messaggio));
+//                } 
+//            }catch(NumberFormatException e){ 
+//                    //System.out.println(e.toString());
+//                }
             System.out.println(messaggio);
         } catch (IOException ex) {        }
         
