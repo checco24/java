@@ -25,6 +25,8 @@ public class threadServer extends Thread{
     Socket socket;
     //ArrayList<Socket> connessioniPorte = new ArrayList<>();
     Timestamp timestamp ;
+    
+    
 
     
     @Override
