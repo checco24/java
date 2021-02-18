@@ -33,7 +33,7 @@ public class threadServer extends Thread{
                     System.out.println("connesso ad un client");
                     String t="ciao";
                     timestamp = new Timestamp(System.currentTimeMillis());
-
+                    
                     this.socket.setKeepAlive(true);
 
                     System.out.println("scrivo al client");
