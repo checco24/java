@@ -10,10 +10,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
-import countdown.countdown;
+import utility.countdown;
 import java.net.SocketException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -38,7 +37,6 @@ public class client extends Thread{
             avviaCD(a[1]);
             System.out.println(a[1]);
             leggi();
-            leggi();leggi();
             
             
             

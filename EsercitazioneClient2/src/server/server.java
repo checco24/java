@@ -5,7 +5,7 @@
  */
 package server;
 
-import countdown.countdown;
+import utility.countdown;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -112,6 +112,11 @@ public class server extends Thread{
     
     
     
+    private String scansionaPorte(){
+        
+        
+        
+        
+        return null;
+    }
 }
-
-
