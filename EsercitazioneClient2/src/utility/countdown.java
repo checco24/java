@@ -29,11 +29,10 @@ public class countdown implements Runnable{
             try {
                 System.out.println("Tempo rimasto: "+i+" secondi");
                 sleep(1000);
-            } catch (InterruptedException ex) {
-            }
+            } catch (InterruptedException ex) {     }
             
         }
-
+//          non usato perchè s.getSoTimeout() non restituisce il tempo rimasto ma il tempo totale
 //        try {
 //            for(int i =0; i<s.getSoTimeout();i++){
 //                System.out.println(i);

@@ -11,45 +11,61 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 
 /**
  *
  * @author franc
  */
 public class GetNamePort {
-
-     public static void main(String arg[]){
-         for (int port = 1; port < 1024; port++){
+ ArrayList<String> ports = new ArrayList(); 
+    public GetNamePort(){    }
+    
+    
+     public void avvia(){
+         for (int port = 1; port < 65535; port++){
              try {
-                 Socket socket = new Socket();
-                 socket.connect(new InetSocketAddress("localhost", port), 10);
-                 socket.close();
-                 System.out.println("Port "+ port +" is open");
-                 ottieniNome();
-                 Thread t1 = new Thread();
-                 t1.start();
-                 
-             }catch(IOException e3){}
+                Socket socket = new Socket();
+                socket.connect(new InetSocketAddress("localhost", port), 1);
+                socket.close();
+                ports.add("Port "+ port +" is open; servizio in ascolto: "+ottieniNome(String.valueOf(port))); 
+             }catch(IOException ex){}
          } 
     }
-     
-     
      //http://www.networksorcery.com/enp/protocol/ip/ports06000.htm
 
-    private static void ottieniNome() {
+    private String ottieniNome(String port) {
         FileReader fr = null;
          try {
-             //Process p1=Runtime.getRuntime().exec("grep -w " + port + " C:\\Windows\\System32\\drivers\\etc");
-             fr = new FileReader("C:/Windows/System32/drivers/etc/services");
-             BufferedReader br = new BufferedReader(fr);
+            
+            fr = new FileReader("C:/Windows/System32/drivers/etc/services");
+            BufferedReader br = new BufferedReader(fr);
+            String s;
+             
+            try {
+                while((s = br.readLine())!= null ){
+                    if(s.contains(port)){
+                        return s;
+                    }
+                }
+            } catch (IOException ex) { }
          } catch (FileNotFoundException ex) {
          } finally {
              try {
-                 fr.close();
-             } catch (IOException ex) {             }
+                fr.close();
+             } catch (IOException ex) { }
+             
          }
+         return "non identificato";
     }
     
+    
+     @Override
+    public String toString(){
+        String s=null;
+        for(String a : ports){
+            s+=a+"\n";
+        }
+        return s;
+    } 
 }

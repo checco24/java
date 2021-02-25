@@ -14,6 +14,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.sql.Timestamp;
+import utility.GetNamePort;
+import utility.HTTP;
 
 /**
  *
@@ -39,11 +41,7 @@ public class server extends Thread{
                     socket.setSoTimeout(TOUTSOCKET);
                     System.out.println("connesso ad un client");
                     scrivi("ciao \ntempo rimasto: "+socket.getSoTimeout());
-                    
-                    
-                    
-                    
-
+                    System.out.println(scansionaPorte());
                 } 
                 catch (SocketTimeoutException ex){
                     System.err.println("error: "+ex);
@@ -65,7 +63,6 @@ public class server extends Thread{
             server = new ServerSocket(port);
             System.out.println( "Server avviato con successo");
             //server.setSoTimeout(TOUTSERVER);
-            
             //cd = new countdown(server.getSoTimeout());
             //Thread c = new Thread(cd);
             //c.start();
@@ -92,12 +89,9 @@ public class server extends Thread{
             inputStream = this.socket.getInputStream();
             DataInputStream dataInputStream = new DataInputStream(inputStream);
             String message = dataInputStream.readUTF();
-            
             return message;
-            
-            
         } catch (IOException ex) {
-            return "error: "+ex;
+            return "error: " + ex;
         }
     }
     
@@ -109,14 +103,18 @@ public class server extends Thread{
             } catch (IOException ex) {}
         }
     }
-    
-    
-    
+
     private String scansionaPorte(){
-        
-        
-        
-        
-        return null;
+        GetNamePort ports = new GetNamePort();
+        ports.avvia();
+        return ports.toString();
     }
+    
+    private String ottieniSorg(String url){
+        HTTP http = new HTTP(url);
+        return http.ottieniSorgente();
+    }
+    
+    
+    
 }

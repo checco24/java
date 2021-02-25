@@ -37,12 +37,7 @@ public class client extends Thread{
             avviaCD(a[1]);
             System.out.println(a[1]);
             leggi();
-            
-            
-            
-            
-            
-            
+
         } catch (IOException ex) {  
             System.err.println("errore: "+ex.toString());
         
