@@ -17,31 +17,38 @@ import java.util.ArrayList;
  *
  * @author franc
  */
-public class GetNamePort {
+public class GetNamePort extends Thread {
  ArrayList<String> ports = new ArrayList(); 
     public GetNamePort(){    }
     
     
-     public void avvia(){
-         for (int port = 1; port < 65535; port++){
-             try {
-                Socket socket = new Socket();
-                socket.connect(new InetSocketAddress("localhost", port), 1);
-                socket.close();
-                ports.add("Port "+ port +" is open; servizio in ascolto: "+ottieniNome(String.valueOf(port))); 
-             }catch(IOException ex){}
-         } 
+ @Override
+    public void run(){ 
+     try {
+            avvia();
+            sleep(60000);
+     } catch (InterruptedException ex) {
+     }
     }
-     //http://www.networksorcery.com/enp/protocol/ip/ports06000.htm
+    
+    
+     public void avvia(){
+        ports.clear();
+        for (int port = 1; port < 1024; port++){
+            try {
+               Socket socket = new Socket();
+               socket.connect(new InetSocketAddress("localhost", port), 1);
+               socket.close();
+               ports.add("Port "+ port +" is open; servizio in ascolto: "+ottieniNome(String.valueOf(port))); 
+            }catch(IOException ex){}
+        }
+    }
+    //http://www.networksorcery.com/enp/protocol/ip/ports06000.htm
 
     private String ottieniNome(String port) {
-        FileReader fr = null;
-         try {
-            
-            fr = new FileReader("C:/Windows/System32/drivers/etc/services");
-            BufferedReader br = new BufferedReader(fr);
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("C:/Windows/System32/drivers/etc/services"));
             String s;
-             
             try {
                 while((s = br.readLine())!= null ){
                     if(s.contains(port)){
@@ -49,20 +56,14 @@ public class GetNamePort {
                     }
                 }
             } catch (IOException ex) { }
-         } catch (FileNotFoundException ex) {
-         } finally {
-             try {
-                fr.close();
-             } catch (IOException ex) { }
-             
-         }
-         return "non identificato";
+        } catch (FileNotFoundException ex) { }
+        return "non identificato";
     }
     
     
      @Override
     public String toString(){
-        String s=null;
+        String s="";
         for(String a : ports){
             s+=a+"\n";
         }

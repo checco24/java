@@ -30,10 +30,12 @@ public class server extends Thread{
     final int TOUTSOCKET=16000;//ms
     boolean ferma;
     countdown cd;
+    GetNamePort ports;
     
     @Override
     public void run(){        
         if(avvia(2345)){
+            scansionaPorte();
             while(true){
                 try {
                     socket=server.accept();
@@ -41,7 +43,10 @@ public class server extends Thread{
                     socket.setSoTimeout(TOUTSOCKET);
                     System.out.println("connesso ad un client");
                     scrivi("ciao \ntempo rimasto: "+socket.getSoTimeout());
-                    System.out.println(scansionaPorte());
+                    System.out.println(ports);
+                    
+                    //ottieniSorg("https://www.avolta.pg.it/pvw/app/PGIT0005/pvw_sito.php");
+                    
                 } 
                 catch (SocketTimeoutException ex){
                     System.err.println("error: "+ex);
@@ -89,6 +94,12 @@ public class server extends Thread{
             inputStream = this.socket.getInputStream();
             DataInputStream dataInputStream = new DataInputStream(inputStream);
             String message = dataInputStream.readUTF();
+            
+            if(message.contains("http")){
+                ottieniSorg(message);
+            }
+            
+            
             return message;
         } catch (IOException ex) {
             return "error: " + ex;
@@ -104,14 +115,16 @@ public class server extends Thread{
         }
     }
 
-    private String scansionaPorte(){
-        GetNamePort ports = new GetNamePort();
-        ports.avvia();
-        return ports.toString();
+    private void scansionaPorte(){
+        ports = new GetNamePort();
+        ports.start();
     }
     
     private String ottieniSorg(String url){
         HTTP http = new HTTP(url);
+        System.out.println(http.ottieniSorgente());
+        
+        
         return http.ottieniSorgente();
     }
     

@@ -43,12 +43,8 @@ public class threadServer extends Thread{
                     leggi();
 
                 } catch (IOException ex) {        }
-
-            }
-        
+            }        
         }
-        
-        
     }
     
     /**
