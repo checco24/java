@@ -9,13 +9,6 @@ package git5b;
  *
  * @author francesco
  */
-public class Git5B {
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
+public class th extends Thread {
     
 }
